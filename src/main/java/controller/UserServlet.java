@@ -15,7 +15,8 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private UserDAO userDAO;
-    private static int count =0;
+    private static boolean order1 = false;
+    private static boolean order2 = false;
 
     public void init() {
         userDAO = new UserDAO();
@@ -35,9 +36,7 @@ public class UserServlet extends HttpServlet {
                 case "edit":
                     updateUser(request, response);
                     break;
-                case "search":
-                    searchUserbyCountry(request,response);
-                    break;
+
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -62,27 +61,25 @@ public class UserServlet extends HttpServlet {
                 case "delete":
                     deleteUser(request, response);
                     break;
-                case "order":
-                    count=count+1;
-                    if (count%2==0){
-                        listUser(request,response);
-                    }else {
-                        orderListbyName(request,response);
-                    }
-                    System.out.println(count);
-                    break;
-                case "orderselectedlist":
-                    count=0;
-                    count=count+1;
-                    if (count%2==0){
-                        searchUserbyCountry(request,response);
+                case "search":
+                    if (!order2){
+                        searchUserbyCountry(request, response);
+                        order2=true;
                     }else {
                         orderSelectedList(request,response);
+                        order2=false;
                     }
-                    System.out.println(count);
+                    System.out.println(order2);
                     break;
                 default:
-                    listUser(request, response);
+                    if (!order1){
+                        listUser(request,response);
+                        order1=true;
+                    }else {
+                        orderListbyName(request,response);
+                        order1=false;
+                    }
+                    System.out.println(order1);
                     break;
             }
         } catch (SQLException ex) {
@@ -151,6 +148,7 @@ public class UserServlet extends HttpServlet {
         String search = request.getParameter("country");
         List<User> userList = userDAO.selectbyCountry(search);
         request.setAttribute("listUser", userList);
+        request.setAttribute("search", search);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/search.jsp");
         dispatcher.forward(request, response);
     }
@@ -166,6 +164,7 @@ public class UserServlet extends HttpServlet {
         String search = request.getParameter("country");
         List<User> listUser = userDAO.orderSelectedList(search);
         request.setAttribute("listUser",listUser);
+        request.setAttribute("search",search);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/search.jsp");
         dispatcher.forward(request, response);
     }

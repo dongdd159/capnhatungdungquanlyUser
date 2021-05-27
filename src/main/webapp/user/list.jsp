@@ -19,8 +19,8 @@
         <a href="/users?action=create">Add New User</a>
     </h2>
     <h2>
-        <form action="/users?action=search" method="post">
-        <input type="text"name="country" id="country" placeholder="Enter country"> <button type="submit" value="Search" >Search</button>
+        <form action="/users" >
+        <input type="text"name="country" id="country" placeholder="Enter country"> <button name="action" type="submit" value="search" >Search</button>
         </form>
     </h2>
 </center>
@@ -29,7 +29,7 @@
         <caption><h2>List of Users</h2></caption>
         <tr>
             <th>ID</th>
-            <th><a href="/users?action=order">Name</a></th>
+            <th><a href="/users?">Name</a></th>
             <th>Email</th>
             <th>Country</th>
             <th>Actions</th>

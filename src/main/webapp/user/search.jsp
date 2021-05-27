@@ -27,7 +27,7 @@
         <caption><h2>List of Users</h2></caption>
         <tr>
             <th>ID</th>
-            <th><a href="/users?action=orderselectedlist">Name</a></th>
+            <th><a href="/users?action=search&country=${search}">Name</a></th>
             <th>Email</th>
             <th>Country</th>
             <th>Actions</th>
