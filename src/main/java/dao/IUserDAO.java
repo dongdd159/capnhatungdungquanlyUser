@@ -21,4 +21,8 @@ public interface IUserDAO {
     public List<User> orderList();
 
     public List<User> orderSelectedList(String search);
+
+    User getUserById(int id);
+
+    void insertUserStore(User user) throws SQLException;
 }
